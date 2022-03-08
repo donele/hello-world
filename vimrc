@@ -1,5 +1,28 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+Plugin 'preservim/nerdtree'
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" ==================================================================
+
 " Leader.
-let mapleader="\<SPACE>"
+let mapleader =" "
 
 " Prefer vertical diffsplit
 set diffopt=vertical
@@ -8,7 +31,7 @@ set diffopt=vertical
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Tab definitions.
-set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4
+set tabstop=4 softtabstop=0 expandtab shiftwidth=4
 
 " Extend % matching.
 runtime macros/matchit.vim
@@ -20,12 +43,11 @@ set path+=~/gtdev/globaltickdata/source/include
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
 if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-    \ | wincmd p | diffthis
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis | wincmd p | diffthis
 endif
 
 syntax on
-colorscheme koehler
+colorscheme slate
 
 "----------------------------------------------------------------------------
 " Mappings ------------------------------------------------------------------
@@ -45,6 +67,7 @@ imap <F1> <nop>
 nnoremap <leader>k q:
 
 " Let <leader>/ clear highlights.
+set hlsearch
 nmap <silent> <leader>/ :nohlsearch<cr>
 
 " Insert lines.
@@ -78,10 +101,7 @@ if has("autocmd")
   " (happens when dropping a file on gvim).
   " Also don't do it when the mark is in the first line, that is the default
   " position when opening a file.
-  autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
   augroup END
 else
@@ -150,10 +170,10 @@ endif " has("autocmd")
 "let g:netrw_altv = 1
 
 " netrw tree view.
-let g:netrw_liststyle = 3
+"let g:netrw_liststyle = 3
 
 " directories on the top, files below.
-let g:netrw_sort_sequence='[\/]$,*'
+"let g:netrw_sort_sequence='[\/]$,*'
 
 "----------------------------------------------------------------------------
 " tmux navigation -----------------------------------------------------------
@@ -163,8 +183,11 @@ if exists('$TMUX')
 		let previous_winnr = winnr()
 		silent! execute "wincmd " . a:wincmd
 		if previous_winnr == winnr()
-			call system("tmux select-pane -" . a:tmuxdir)
-			redraw!
+            let iszoomed = system("tmux list-panes -F '#F' | grep Z | wc -w")
+            if iszoomed == 0
+			    call system("tmux select-pane -" . a:tmuxdir)
+			    redraw!
+            endif
 		endif
 	endfunction
 
@@ -194,24 +217,24 @@ nmap <C-\>c :cs find c <C-R>=expand("<cword>")<cr><cr>
 " Bundles -------------------------------------------------------------------
 "----------------------------------------------------------------------------
 
-set tags=~/gtdev/tags,~/.vim/optionlibs.tags,~/.vim/boost.tags
-set notagrelative
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-set runtimepath^=~/.vim/bundle/tagbar
-set runtimepath^=~/.vim/bundle/nerdtree
+"set tags=~/gtdev/tags,~/.vim/optionlibs.tags,~/.vim/boost.tags
+"set notagrelative
+"set runtimepath^=~/.vim/bundle/ctrlp.vim
+"set runtimepath^=~/.vim/bundle/tagbar
+"set runtimepath^=~/.vim/bundle/nerdtree
 
 " Let ,. do CtrlPTag.
-nnoremap <leader>. :CtrlPTag<cr>
+"nnoremap <leader>. :CtrlPTag<cr>
 
 " Let ,l to toggle Tagbar.
-nnoremap <silent> <leader>l :TagbarToggle<cr>
+"nnoremap <silent> <leader>l :TagbarToggle<cr>
 
 " Settings for vim-slime.
-let g:slime_target = 'tmux'
-let g:slime_python_ipython = 1
+"let g:slime_target = 'tmux'
+"let g:slime_python_ipython = 1
 
 " Vimux.
-nnoremap <leader>r :call VimuxRunCommand("./" . expand("%:t"))<cr>
+"nnoremap <leader>r :call VimuxRunCommand("./" . expand("%:t"))<cr>
 
 " Nerdtree
 map <leader>n :NERDTreeToggle<cr>
