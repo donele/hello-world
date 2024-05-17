@@ -22,8 +22,6 @@ export EDITOR=vim
 export EDITOR=vim
 #export PS1="\e[0;36m[\t \u@\h:\w, \j jobs, \$?]\e[m\n$ "
 export PS1="\e[0;36m[\t \u@\h:\w]\e[m\n$ "
-export KAYRROS_CLIENT_LOGIN=rlam@kempstar.com
-export KAYRROS_CLIENT_PASSWORD=holymonkey@2014
 
 alias lt='ls -lrt'
 alias ll='ls -al'
