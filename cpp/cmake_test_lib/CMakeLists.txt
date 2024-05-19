@@ -17,9 +17,9 @@ set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_RPATH}:$ORIGIN/../lib64/")
 
 # -w to inhibit all warnings.
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
-	set(CMAKE_CXX_FLAGS "-g -w -std=c++17 -lz")
+	set(CMAKE_CXX_FLAGS "-g -w -std=c++17")
 else()
-	set(CMAKE_CXX_FLAGS "-g -w -std=c++17 -flto -lz")
+	set(CMAKE_CXX_FLAGS "-g -w -std=c++17 -flto")
 endif()
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib64")

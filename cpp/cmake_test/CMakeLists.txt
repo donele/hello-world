@@ -13,9 +13,9 @@ endif()
 
 # -w to inhibit all warnings.
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
-	set(CMAKE_CXX_FLAGS "-g -w -std=c++17 -lz")
+	set(CMAKE_CXX_FLAGS "-g -w -std=c++17")
 else()
-	set(CMAKE_CXX_FLAGS "-g -w -std=c++17 -flto -lz")
+	set(CMAKE_CXX_FLAGS "-g -w -std=c++17 -flto")
 endif()
 
 add_executable(test test.cpp)
