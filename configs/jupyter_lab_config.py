@@ -326,7 +326,7 @@
 ## The optional location of the saved workspaces directory. If given, a handler
 #  will be added for workspaces.
 #  Default: ''
- c.LabServerApp.workspaces_dir = '/Users/jdlee/pynb'
+c.LabServerApp.workspaces_dir = '/Users/jdlee/pynb'
 
 #------------------------------------------------------------------------------
 # LabApp(LabServerApp) configuration
