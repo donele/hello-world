@@ -1,6 +1,5 @@
-# This is the top level CMakeLists.txt file.
-
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.20)
+project(cmake_test_subdir)
 
 if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE Release)

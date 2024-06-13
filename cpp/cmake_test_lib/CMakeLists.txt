@@ -1,6 +1,6 @@
-# This is the top level CMakeLists.txt file.
-cmake_minimum_required(VERSION 3.6)
-project(MyProj)
+cmake_minimum_required(VERSION 3.20)
+project(cmake_test_lib)
+
 set(BUILD_SHARED_LIBS ON)
 
 if(NOT CMAKE_BUILD_TYPE)
