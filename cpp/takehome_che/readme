@@ -1,0 +1,33 @@
+
+Overview:
+This repo includes two sets of tools. The first one can be used for json string serialization and deserialization; the second one is to convert chrono time point to and from string.
+
+
+Usage:
+mkdir build
+cd build
+cmake ..
+make -j
+./test/xjsonTest
+./test/xtimeTest
+./benchmark/jsonRDWRBenchmark
+./src/timerEvent
+
+
+Explanation:
+The json util is implemented in xjson.h and xjson.cpp. One needs to derive a data structure from a class JsonObj, and fill two members mem2fromStr_ and mem2toStr_ in the constructor. Then the two functions str2obj and obj2str can be used to convert the data structure from and to a json string. An exmaple can be found in test/xjsonTest.cpp
+The time util has two main functions str2tp and tp2str to convert time point from and to string. Examples can be found in test/xtimeTest.cpp.
+In addition, Timer and Scheduler classes are implemented to create time events. An example can be found in src/timeEvent.cpp
+
+
+Limitations:
+json util assumes the input json string is valid, and doesn't have error check. Furthermore, it can only parse json strings without nested object. 
+The time util doesn't support time zone, and has the time resolution fixed to microseconds.
+
+
+Test:
+A few test cases are provided in test folder using gtest
+
+
+Benchmark:
+The json util is compared to rapidjson library using google benchmark. The json util is about 2 times slower than rapidjson for reading json string, and about 20% slower for writing to json string. The bottleneck is probably the string manipulation, and string convertion to arithmetic types.
