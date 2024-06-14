@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <algorithm>
+#include <unordered_map>
 #include <job_chain.h>
 using namespace std;
 
@@ -59,6 +61,47 @@ bool valid(const vector<string>& v) {
 
 void throw_error() {
 	cout << "Malformed";
+}
+
+bool process_jobs_unordered_map_extract(const string& filename, bool verbose) {
+	unordered_map<int, Chain> chains;
+	vector<Chain> done;
+
+	ifstream ifs(filename);
+	string line;
+	getline(ifs, line);
+
+	for(; getline(ifs, line);) {
+		vector<string> split = split_comma(line);
+		if(valid(split)) {
+			int id = stoi(split[0]);
+			int runtime = stoi(split[1]);
+			int next = stoi(split[2]);
+			if(chains.count(id)) {
+                if(next == 0) {
+                    done.push_back(chains[id]);
+                    chains.erase(id);
+                } else {
+                    auto nh = chains.extract(id);
+                    nh.key() = next;
+                    chains.insert(move(nh));
+                }
+			} else {
+				chains[next].add(id, runtime);
+			}
+		} else {
+			throw_error();
+			return false;
+		}
+	}
+    if(verbose) {
+	    for(auto& ch : done) {
+		    cout << "-" << endl;
+		    ch.report();
+	    }
+	    cout << "-" << endl;
+    }
+	return true;
 }
 
 bool process_jobs_unordered_map(const string& filename, bool verbose) {
