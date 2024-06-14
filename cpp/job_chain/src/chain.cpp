@@ -1,8 +1,25 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
-#include <unordered_map>
+#include <map>
+#include <job_chain.h>
 using namespace std;
+
+struct Chain {
+	int cnt;
+	int sum;
+	vector<int> ids;
+	Chain():cnt(0), sum(0){}
+	void add(int id, int runtime) {
+		++cnt;
+		ids.push_back(id);
+		sum += runtime;
+	}
+	void report() {
+		cout << "First id: " << ids[0] << endl;
+		cout << "Last id: " << ids[cnt - 1] << endl;
+	}
+};
 
 vector<string> split_comma(const string& s) {
 	vector<string> ret;
@@ -40,27 +57,11 @@ bool valid(const vector<string>& v) {
 	return valid_size && non_empty && all_digits;
 }
 
-struct Chain {
-	int cnt;
-	int sum;
-	vector<int> ids;
-	Chain():cnt(0), sum(0){}
-	void add(int id, int runtime) {
-		++cnt;
-		ids.push_back(id);
-		sum += runtime;
-	}
-	void report() {
-		cout << "First id: " << ids[0] << endl;
-		cout << "Last id: " << ids[cnt - 1] << endl;
-	}
-};
-
 void throw_error() {
 	cout << "Malformed";
 }
 
-bool process_jobs() {
+bool process_jobs_unordered_map(bool verbose) {
 	unordered_map<int, Chain> chains;
 	vector<Chain> done;
 
@@ -89,15 +90,92 @@ bool process_jobs() {
 			return false;
 		}
 	}
-	for(auto& ch : done) {
-		cout << "-" << endl;
-		ch.report();
-	}
-	cout << "-" << endl;
+    if(verbose) {
+	    for(auto& ch : done) {
+		    cout << "-" << endl;
+		    ch.report();
+	    }
+	    cout << "-" << endl;
+    }
 	return true;
 }
 
-int main() {
-	process_jobs();
-	return 0;
+bool process_jobs_map(bool verbose) {
+	map<int, Chain> chains;
+	vector<Chain> done;
+
+	ifstream ifs("input.txt");
+	string line;
+	getline(ifs, line);
+
+	for(; getline(ifs, line);) {
+		vector<string> split = split_comma(line);
+		if(valid(split)) {
+			int id = stoi(split[0]);
+			int runtime = stoi(split[1]);
+			int next = stoi(split[2]);
+			if(chains.count(id)) {
+				chains[id].add(id, runtime);
+				if(next == 0)
+					done.push_back(chains[id]);
+				else
+					chains[next] = move(chains[id]);
+				chains.erase(id);
+			} else {
+				chains[next].add(id, runtime);
+			}
+		} else {
+			throw_error();
+			return false;
+		}
+	}
+    if(verbose) {
+	    for(auto& ch : done) {
+		    cout << "-" << endl;
+		    ch.report();
+	    }
+	    cout << "-" << endl;
+    }
+	return true;
+}
+
+bool process_jobs_vector(bool verbose) {
+    vector<int> next_id;
+    vector<Chain> chains;
+
+	ifstream ifs("input.txt");
+	string line;
+	getline(ifs, line);
+
+	for(; getline(ifs, line);) {
+		vector<string> split = split_comma(line);
+		if(valid(split)) {
+			int id = stoi(split[0]);
+			int runtime = stoi(split[1]);
+			int next = stoi(split[2]);
+
+            auto it = find(next_id.begin(), next_id.end(), id);
+			if(it == next_id.end()) {
+                Chain ch;
+                chains.push_back(ch);
+                chains[chains.size() - 1].add(id, runtime);
+                next_id.push_back(next);
+            } else {
+                int ichain = distance(next_id.begin(), it);
+                chains[ichain].add(id, runtime);
+                next_id[ichain] = next;
+            }
+		} else {
+			throw_error();
+			return false;
+		}
+	}
+    if(verbose) {
+	    for(auto& ch : chains) {
+		    cout << "-" << endl;
+		    ch.report();
+	    }
+	    cout << "-" << endl;
+    }
+	return true;
 }
