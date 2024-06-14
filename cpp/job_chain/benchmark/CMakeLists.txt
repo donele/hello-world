@@ -11,4 +11,6 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 FetchContent_MakeAvailable(googlebenchmark)
-add_executable(chain_benchmark chain_benchmark.cpp)
+
+add_executable(benchmark_chain benchmark_chain.cpp)
+target_link_libraries(benchmark_chain benchmark::benchmark job_chain)
