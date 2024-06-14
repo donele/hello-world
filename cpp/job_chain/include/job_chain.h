@@ -1,6 +1,7 @@
 #ifndef __job_chain_h__
 #define __job_chain_h__
 #include<string>
+#include<vector>
 
 struct Job {
     int id;
