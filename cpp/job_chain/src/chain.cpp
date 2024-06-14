@@ -61,11 +61,11 @@ void throw_error() {
 	cout << "Malformed";
 }
 
-bool process_jobs_unordered_map(bool verbose) {
+bool process_jobs_unordered_map(const string& filename, bool verbose) {
 	unordered_map<int, Chain> chains;
 	vector<Chain> done;
 
-	ifstream ifs("input.txt");
+	ifstream ifs(filename);
 	string line;
 	getline(ifs, line);
 
@@ -100,11 +100,11 @@ bool process_jobs_unordered_map(bool verbose) {
 	return true;
 }
 
-bool process_jobs_map(bool verbose) {
+bool process_jobs_map(const string& filename, bool verbose) {
 	map<int, Chain> chains;
 	vector<Chain> done;
 
-	ifstream ifs("input.txt");
+	ifstream ifs(filename);
 	string line;
 	getline(ifs, line);
 
@@ -139,11 +139,11 @@ bool process_jobs_map(bool verbose) {
 	return true;
 }
 
-bool process_jobs_vector(bool verbose) {
+bool process_jobs_vector(const string& filename, bool verbose) {
     vector<int> next_id;
     vector<Chain> chains;
 
-	ifstream ifs("input.txt");
+	ifstream ifs(filename);
 	string line;
 	getline(ifs, line);
 
