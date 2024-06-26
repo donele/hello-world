@@ -17,23 +17,20 @@ ExternalProject_Add(
     INSTALL_COMMAND ""
     UPDATE_COMMAND ""
 )
-
 ExternalProject_Get_Property(rapidjson source_dir)
 set(RAPIDJSON_INCLUDE_DIR ${source_dir}/include)
+include_directories(${RAPIDJSON_INCLUDE_DIR})
 
 
 include(FetchContent)
-
 FetchContent_Declare(
     googlebenchmark
     GIT_REPOSITORY https://github.com/google/benchmark.git
     GIT_TAG v1.7.1
 )
-
 FetchContent_MakeAvailable(googlebenchmark)
 
 include_directories(include)
-include_directories(${RAPIDJSON_INCLUDE_DIR})
  
 add_executable (jsonRDWRBenchmark jsonRDWRBenchmark.cpp)
 target_link_libraries (jsonRDWRBenchmark
