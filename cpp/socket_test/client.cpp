@@ -6,6 +6,8 @@
 #include <sys/socket.h> 
 #include <unistd.h> 
 
+#define PORT_NO 8080
+
 int main() 
 { 
 	// creating socket 
@@ -14,15 +16,18 @@ int main()
 	// specifying address 
 	sockaddr_in serverAddress; 
 	serverAddress.sin_family = AF_INET; 
-	serverAddress.sin_port = htons(8080); 
+	serverAddress.sin_port = htons(PORT_NO); 
 	serverAddress.sin_addr.s_addr = INADDR_ANY; 
 
 	// sending connection request 
 	connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress));
 
 	// sending data 
-	const char* message = "Hello, server!"; 
-	send(clientSocket, message, strlen(message), 0); 
+	//while(true) {
+		const char* message = "Hello, server!"; 
+		send(clientSocket, message, strlen(message), 0); 
+		//sleep(3);
+	//}
 
 	// closing socket 
 	close(clientSocket); 

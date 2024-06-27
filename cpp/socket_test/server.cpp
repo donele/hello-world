@@ -6,6 +6,8 @@
 #include <sys/socket.h> 
 #include <unistd.h> 
 
+#define PORT_NO 8080
+
 using namespace std; 
 
 int main() 
@@ -16,7 +18,7 @@ int main()
 	// specifying the address 
 	sockaddr_in serverAddress; 
 	serverAddress.sin_family = AF_INET; 
-	serverAddress.sin_port = htons(8080); 
+	serverAddress.sin_port = htons(PORT_NO); 
 	serverAddress.sin_addr.s_addr = INADDR_ANY; 
 
 	// binding socket. 
