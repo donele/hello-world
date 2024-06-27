@@ -27,6 +27,10 @@ FetchContent_MakeAvailable(ev)
 
 add_executable(stdin stdin.cpp)
 target_link_libraries(stdin ev::ev)
+add_executable(two_timers two_timers.cpp)
+target_link_libraries(two_timers ev::ev)
 add_executable(timer timer.cpp)
 target_link_libraries(timer ev::ev)
+add_executable(socket socket.cpp)
+target_link_libraries(socket ev::ev)
 
