@@ -15,14 +15,9 @@ weekday() {
     date +%a
 }
 export PS1="\e[0;36m[\$(weekday) \t \u@\h:\w]\e[m\$(get_git_branch)\e[m\n$ "
+export EDITOR=vim
+
 alias s="source ~/.bashrc"
-export EDITOR=vim
-#export BROWSER=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
-
-export EDITOR=vim
-#export PS1="\e[0;36m[\t \u@\h:\w, \j jobs, \$?]\e[m\n$ "
-export PS1="\e[0;36m[\t \u@\h:\w]\e[m\n$ "
-
 alias lt='ls -lrt'
 alias ll='ls -al'
 alias tf='tail -f'
@@ -32,7 +27,8 @@ alias gc='git commit -v'
 alias gd='git diff'
 alias gl='git log --oneline'
 alias gb='git branch'
-alias cmake_debug='cmake -DCMAKE_BUILD_TYPE=Debug'
+alias gl='git log'
+alias cmake_debug="cmake -DCMAKE_BUILD_TYPE=Debug"
 
 if [ -e $HOME/functions.sh ]
 then
