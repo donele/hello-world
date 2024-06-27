@@ -25,8 +25,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(ev)
 
-add_executable(main main.cpp)
-target_link_libraries(main ev::ev)
-add_executable(count count.cpp)
-target_link_libraries(count ev::ev)
+add_executable(stdin stdin.cpp)
+target_link_libraries(stdin ev::ev)
+add_executable(timer timer.cpp)
+target_link_libraries(timer ev::ev)
 
