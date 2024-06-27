@@ -1,7 +1,6 @@
 // a single header file is required
 #include <ev.h>
 #include <stdio.h> // for puts
-#include <thread>
 
 void onesec_timer_cb(EV_P_ ev_timer *w, int revents)
 {
