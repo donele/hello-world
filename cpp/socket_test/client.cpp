@@ -22,12 +22,12 @@ int main()
 	// sending connection request 
 	connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress));
 
-	// sending data 
-	//while(true) {
-		const char* message = "Hello, server!"; 
-		send(clientSocket, message, strlen(message), 0); 
-		//sleep(3);
-	//}
+	const char* message = "Hello, server!";
+    for(int i = 0; i < 3; ++i)
+    {
+	    send(clientSocket, message, strlen(message), 0);
+        sleep(1);
+    }
 
 	// closing socket 
 	close(clientSocket); 
