@@ -1,10 +1,13 @@
 #include <ev.h>
-#include <stdio.h> // for puts
+#include <unistd.h>
+#include <iostream>
+
+using namespace std;
 
 void onesec_timer_cb(EV_P_ ev_timer *w, int revents)
 {
-    puts ("cb1");
 	int* cnt = (int*)(w->data);
+    cout << "cb1 " << *cnt << endl;
 	if (((*cnt)--) <= 0) {
 		ev_break(EV_A_ EVBREAK_ALL);
 	}
@@ -12,7 +15,7 @@ void onesec_timer_cb(EV_P_ ev_timer *w, int revents)
 
 void threesec_timer_cb(EV_P_ ev_timer *w, int revents)
 {
-    puts ("cb3");
+    cout << "cb3" << endl;
 }
 
 int main() {
