@@ -3,8 +3,11 @@
 #include <netinet/in.h>
 #include <ev.h>
 #include <strings.h>
+#include <iostream>
 
-#define PORT_NO 3033
+using namespace std;
+
+#define PORT_NO 8080
 #define BUFFER_SIZE 1024
 
 void accept_cb(struct ev_loop *loop, struct ev_io *watcher, int revents);
@@ -50,7 +53,8 @@ int main()
   // Start infinite loop
   while (1)
   {
-    ev_loop(loop, 0);
+    cout << "start loop" << endl;
+    ev_run(loop, 0);
   }
 
   return 0;
@@ -113,7 +117,7 @@ void read_cb(struct ev_loop *loop, struct ev_io *watcher, int revents){
   }
   else
   {
-    printf("message:%s",buffer);
+      cout << "message:" << buffer << endl;
   }
 
   // Send message bach to the client
