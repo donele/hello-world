@@ -6,7 +6,7 @@ int main() {
     const string filename = "input.txt";
 
     cout << "Using unordered map::extract, parse_line..." << endl;
-	process_jobs_map(filename, true);
+    process_jobs_map(filename, true);
 
-	return 0;
+    return 0;
 }

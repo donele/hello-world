@@ -1,3 +1,3 @@
 class A {
-	A() = default;
+    A() = default;
 };

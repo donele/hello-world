@@ -2,5 +2,5 @@
 #include <iostream>
 
 void myfunc() {
-	std::cout << "myfunc" << std::endl;
+    std::cout << "myfunc" << std::endl;
 }

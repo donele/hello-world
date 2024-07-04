@@ -2,7 +2,7 @@
 #define __myinclude__
 
 class A {
-	A() = default;
+    A() = default;
 };
 
 void myfunc();

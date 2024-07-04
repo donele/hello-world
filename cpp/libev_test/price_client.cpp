@@ -1,5 +1,6 @@
 // C++ program to illustrate the client application in the 
 // socket programming 
+#include <cmath>
 #include <cstring> 
 #include <iostream> 
 #include <netinet/in.h> 
@@ -10,32 +11,34 @@
 
 int main() 
 { 
-	// creating socket 
-	int clientSocket = socket(AF_INET, SOCK_STREAM, 0); 
+    // creating socket 
+    int clientSocket = socket(AF_INET, SOCK_STREAM, 0); 
 
-	// specifying address 
-	sockaddr_in serverAddress; 
-	serverAddress.sin_family = AF_INET; 
-	serverAddress.sin_port = htons(PORT_NO); 
-	serverAddress.sin_addr.s_addr = INADDR_ANY; 
+    // specifying address 
+    sockaddr_in serverAddress; 
+    serverAddress.sin_family = AF_INET; 
+    serverAddress.sin_port = htons(PORT_NO); 
+    serverAddress.sin_addr.s_addr = INADDR_ANY; 
 
-	// sending connection request 
-	connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress));
+    // sending connection request 
+    connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress));
 
-	//const char* message = "Hello, server!"; 
-    double price = 0.;
+    //const char* message = "Hello, server!"; 
+    double price = 100.;
     char buf[16];
-    for(int i = 0; i < 30; ++i)
+    double uinterval = 10000;
+    double duration = 30;
+    for(int i = 0; i < duration / uinterval * 1e6; ++i)
     {
-        price += 0.01;
+        price += round(100*((double)rand() / RAND_MAX - .5)) / 100;
         sprintf(buf, "%.2f", price);
-	    send(clientSocket, buf, strlen(buf)+1, 0); 
-        sleep(1);
+        send(clientSocket, buf, strlen(buf)+1, 0); 
+        usleep(uinterval);
     }
 
-	// closing socket 
-	close(clientSocket); 
+    // closing socket 
+    close(clientSocket); 
 
-	return 0; 
+    return 0; 
 }
 
